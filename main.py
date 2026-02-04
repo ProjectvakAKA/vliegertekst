@@ -182,27 +182,35 @@ def database():
 @app.route("/toevoegen", methods=['POST'])
 def toev():
     username = request.form["user"]
-    id = request.form["id"]
+    contact_id = request.form["id"]
     name = request.form["name"]
+
     userrr = db.execute("SELECT id, name FROM users WHERE name=%s", username)
     user = userrr[0]['id']
-    if id in [i['contact_ID'] for i in
-              db.execute("SELECT contact_ID FROM contacts WHERE user_id=%s", user)] or user == id:
+
+    # ⭐ Gebruik 'contact_id' (kleine letters)
+    existing_contacts = db.execute("SELECT contact_id FROM contacts WHERE user_id=%s", user)
+
+    if contact_id in [str(i['contact_id']) for i in existing_contacts] or str(user) == str(contact_id):
         return "fout"
-    db.execute("INSERT INTO contacts (user_id, contact_ID, contact_name, contact_phone) VALUES(%s, %s, %s, %s)", user,
-               id, name, None)
-    db.execute("INSERT INTO contacts (user_id, contact_ID, contact_name, contact_phone) VALUES(%s, %s, %s, %s)", id,
-               user, username, None)
+
+    # ⭐ Gebruik 'contact_id' in INSERT (kleine letters)
+    db.execute("INSERT INTO contacts (user_id, contact_id, contact_name, contact_phone) VALUES(%s, %s, %s, %s)",
+               user, contact_id, name, None)
+    db.execute("INSERT INTO contacts (user_id, contact_id, contact_name, contact_phone) VALUES(%s, %s, %s, %s)",
+               contact_id, user, username, None)
+
     dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user)
+
+    # ⭐ Ook hier: 'contact_id' (kleine letters)
     iedereen = db.execute(
         "SELECT id, name FROM users "
-        "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
+        "WHERE id NOT IN (SELECT contact_id FROM contacts WHERE user_id = %s) "
         "AND id != %s",
         user, user
     )
+
     return render_template('template.html', user=username, userD=user, dat=dat, iedereen=iedereen)
-
-
 @app.route("/bericht", methods=['POST'])
 def bericht():
     try:
