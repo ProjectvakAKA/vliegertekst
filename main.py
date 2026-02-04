@@ -311,7 +311,7 @@ def back():
 def joeri():
     sender_id = request.form["userID"]
     name = db.execute("SELECT name FROM users WHERE id=%s", sender_id)[0]["name"]
-    return render_template("joeriAI.html", name=name, userD=sender_id)
+    return render_template("JoeriAI.html", name=name, userD=sender_id)  # ⭐ Hoofdletter J!
 
 
 @app.route("/send", methods=['POST'])
