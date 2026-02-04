@@ -8,9 +8,7 @@ class Database:
         self.conn_string = os.environ.get('POSTGRES_URL')
 
         if not self.conn_string:
-            raise ValueError(
-                "POSTGRES_URL environment variabele is niet ingesteld!"
-            )
+            raise ValueError("POSTGRES_URL environment variabele is niet ingesteld!")
 
     def execute(self, query, *params):
         try:
@@ -29,8 +27,6 @@ class Database:
             conn.close()
             return result
 
-        except psycopg2.OperationalError as e:
-            raise ValueError(f"Database connectie fout: {str(e)}")
         except Exception as e:
             raise
 
