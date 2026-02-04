@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="nnogoggggggddsdqdfdsffdq">
+    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="main update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770209472945</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="main update">
+      <option name="closed" value="true" />
+      <created>1770211084584</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1770211084584</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -208,6 +217,7 @@
     <MESSAGE value="nieuwe update" />
     <MESSAGE value="nnogogggggg" />
     <MESSAGE value="nnogoggggggddsdqdfdsffdq" />
-    <option name="LAST_COMMIT_MESSAGE" value="nnogoggggggddsdqdfdsffdq" />
+    <MESSAGE value="main update" />
+    <option name="LAST_COMMIT_MESSAGE" value="main update" />
   </component>
 </project>

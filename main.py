@@ -86,6 +86,7 @@ def login():
     return render_template("loginpage.html")
 
 
+
 @app.route("/login2", methods=['POST'])
 def login2():
     try:
@@ -124,23 +125,36 @@ def login2():
         session['name'] = username
         session['user_id'] = user_id
 
-        # Haal contacten en beschikbare gebruikers op
-        dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user_id)
-        iedereen = db.execute(
-            "SELECT id, name FROM users "
-            "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
-            "AND id != %s",
-            user_id, user_id
-        )
-
         print(f"✅ Login successful for {username}")
-        return render_template('template.html', user=username, userD=user_id, dat=dat, iedereen=iedereen)
+
+        # ⭐ REDIRECT naar dashboard in plaats van direct renderen
+        return redirect(url_for('dashboard'))
 
     except Exception as e:
         print(f"❌ LOGIN ERROR: {str(e)}")
         return f"❌ Error bij inloggen: {str(e)}", 500
 
 
+# ⭐ NIEUWE ROUTE: Dashboard
+@app.route('/dashboard')
+def dashboard():
+    # Check of gebruiker is ingelogd
+    if 'user_id' not in session:
+        return redirect(url_for('home'))
+
+    user_id = session['user_id']
+    username = session['name']
+
+    # Haal contacten en beschikbare gebruikers op
+    dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user_id)
+    iedereen = db.execute(
+        "SELECT id, name FROM users "
+        "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
+        "AND id != %s",
+        user_id, user_id
+    )
+
+    return render_template('template.html', user=username, userD=user_id, dat=dat, iedereen=iedereen)
 @app.route("/FAQ")
 def FAQ():
     return render_template("FAQ.html")
@@ -191,29 +205,56 @@ def toev():
 
 @app.route("/bericht", methods=['POST'])
 def bericht():
-    sender_id = request.form["userID"]
-    receiver_id = request.form["receiver_id"]
-    username = request.form["name"]
-    name = db.execute("SELECT name FROM users WHERE id=%s", sender_id)[0]["name"]
-    chats = db.execute("""
-    SELECT
-        m.sender_id,
-        m.receiver_id,
-        m.message_text,
-        m.timestamp,
-        sender.name   AS sender_name,
-        receiver.name AS receiver_name
-    FROM messages AS m
-    JOIN users   AS sender   ON m.sender_id   = sender.id
-    JOIN users   AS receiver ON m.receiver_id = receiver.id
-    WHERE (m.sender_id = %s AND m.receiver_id = %s)
-       OR (m.sender_id = %s AND m.receiver_id = %s)
-    ORDER BY m.timestamp
-    """, sender_id, receiver_id, receiver_id, sender_id)
-    return render_template("berichtUI.html", user=name, userD=sender_id, andere=receiver_id, anderen=username,
-                           chats=chats)
+    try:
+        sender_id = request.form.get("userID", "").strip()
+        receiver_id = request.form.get("receiver_id", "").strip()
+        username = request.form.get("name", "").strip()
 
+        # Validatie
+        if not sender_id or not receiver_id:
+            return "❌ Error: Gebruiker IDs ontbreken!", 400
 
+        # Convert naar integers
+        try:
+            sender_id = int(sender_id)
+            receiver_id = int(receiver_id)
+        except ValueError:
+            return "❌ Error: Ongeldige gebruiker IDs!", 400
+
+        # Haal naam op
+        name_result = db.execute("SELECT name FROM users WHERE id=%s", sender_id)
+        if not name_result:
+            return "❌ Error: Gebruiker niet gevonden!", 400
+
+        name = name_result[0]["name"]
+
+        # Haal berichten op
+        chats = db.execute("""
+            SELECT
+                m.sender_id,
+                m.receiver_id,
+                m.message_text,
+                m.timestamp,
+                sender.name   AS sender_name,
+                receiver.name AS receiver_name
+            FROM messages AS m
+            JOIN users AS sender ON m.sender_id = sender.id
+            JOIN users AS receiver ON m.receiver_id = receiver.id
+            WHERE (m.sender_id = %s AND m.receiver_id = %s)
+               OR (m.sender_id = %s AND m.receiver_id = %s)
+            ORDER BY m.timestamp
+        """, sender_id, receiver_id, receiver_id, sender_id)
+
+        return render_template("berichtUI.html",
+                               user=name,
+                               userD=sender_id,
+                               andere=receiver_id,
+                               anderen=username,
+                               chats=chats)
+
+    except Exception as e:
+        print(f"❌ BERICHT ERROR: {str(e)}")
+        return f"❌ Error: {str(e)}", 500
 @app.route("/verwijder", methods=['POST'])
 def verwijder():
     username = request.form["user"]
