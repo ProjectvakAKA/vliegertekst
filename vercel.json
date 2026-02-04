@@ -1,6 +1,0 @@
-{
-  "env": {
-    "POSTGRES_URL": "@postgres_url"
-  }
-}
-
