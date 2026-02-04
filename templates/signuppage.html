@@ -1,0 +1,16 @@
+{% extends "dit.html" %}
+
+{% block title %}Signup{% endblock %}
+
+{% block body %}
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh; flex-direction: column; text-align: center;">
+  <h1>SIGNUP</h1>
+  <form action="/singuppage" method="post" style="margin-top: 20px;">
+    <input type="text" name="username" placeholder="Enter your name"
+           style="font-size: 1.2em; padding: 10px; width: 300px; text-align: center;" required><br><br>
+    <input type="password" name="password" placeholder="Geef passwoord"
+           style="font-size: 1.2em; padding: 10px; width: 300px; text-align: center;" required><br><br>
+    <button style="font-size: 1.2em; padding: 10px 20px;">Klik om in te loggen</button>
+  </form>
+</div>
+{% endblock %}

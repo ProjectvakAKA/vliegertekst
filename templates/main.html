@@ -1,0 +1,121 @@
+{% extends "dit.html" %}
+{% block body %}
+<title>{% block title %}Home Vliegertekst{% endblock %}</title>
+<style>
+
+    .block {
+        height: 200px;
+        width: 300px;
+        margin: 50px;
+        opacity: 0;
+        transform: scale(0.5);
+        animation: appear linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+    }
+
+    @keyframes appear {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .view {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    body {
+      margin: 0;
+      background-color: #e1f5ff;
+    }
+    .centered-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .centered-content img {
+      display: block;
+      margin-left: -465px;
+    }
+
+    @keyframes reveal {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    .img {
+        animation: reveal linear;
+        animation-timeline: view();
+        margin: 0 auto
+    }
+    @keyframes appear {
+        from { opacity: 0; transform: scale(0.5);
+           }
+        to   { opacity: 1; transform: scale(1);
+
+        }
+    }
+    .centered-content .block {
+      margin-bottom: 700px;   /* ruimte onder elke blok */
+      text-align: center;
+}
+    .centered-content .bloc {
+      margin-bottom: 150px;
+      text-align: center;
+}
+
+
+</style>
+<div style="background-color:#e1f5ff; text-align: center; ">
+    <div class="form-content">
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <form action="/FAQ"><button>FAQ</button></form>
+            <form action="/SUPPORT"><button>SUPPORT</button></form>
+            <form action="/signup"><button >Signup</button></form>
+            <form action="/login" method="post"><button>Login</button></form>
+        </div>
+        <div class="view">
+
+                <h1>THE MESSAGING APP THAT KNOWS NO BOUNDARIES</h1>
+
+                <section>
+                    <img src="{{ url_for('static', filename='gif.gif') }}" alt="foto" width="800" height="600">
+                </section>
+            <div class="centered-content">
+                <section class="bloc">
+                    <h1>UNLIMITED OPTIONS AND AI SUPPORT</h1>
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto.webp') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto1.png') }}" alt="foto" width="1200" height="600">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='fotoé.png') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto3.png') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto4.png') }}" alt="foto" width="1200" height="750">
+                </section>
+            </div>
+                <script defer src="app.js"></script>
+
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}
+

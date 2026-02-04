@@ -1,0 +1,89 @@
+<!-- Upgraded Jinja2 template with search and improved button styles -->
+{% extends "dit.html" %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ user }}-showroom {% endblock %}</title>
+    <style>
+      body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px; }
+      h1, h2 { color: #333; }
+      ul { list-style: none; padding: 0; }
+      li { margin-bottom: 12px; }
+      .btn { display: inline-block; padding: 8px 16px; font-size: 14px; font-weight: 600; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease; }
+      .btn:hover { transform: translateY(-1px); }
+      .btn:active { transform: translateY(0); }
+      .btn-primary { background-color: #4CAF50; color: #fff; }
+      .btn-primary:hover { background-color: #45a049; }
+      .btn-danger { background-color: #f44336; color: #fff; }
+      .btn-danger:hover { background-color: #e53935; }
+      .btn-outline { background-color: transparent; color: #4CAF50; border: 2px solid #4CAF50; }
+      .btn-outline:hover { background-color: #4CAF50; color: #fff; }
+      /* Search bar styling */
+      #searchInput { width: 100%; max-width: 400px; padding: 8px 12px; margin-bottom: 20px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+  <h1>{{ user }} chats</h1>
+  <h2>{{ dat|length }} vrienden opgeslagen bij {{ user }}</h2>
+
+  <!-- Search bar -->
+  <input type="text" id="searchInput" placeholder="Zoek naar nieuwe vrienden...">
+
+  <ul id="contactsList">
+    {% for item in dat %}
+      <li class="bericht contact-item">
+        <form action="/bericht" method="post" style="display:inline-block; margin-right:8px;">
+          <input type="hidden" name="userID" value="{{ userD }}">
+          <input type="hidden" name="name" value="{{ item['contact_name'] }}">
+          <input type="hidden" name="receiver_id" value="{{ item['contact_ID'] }}">
+          <button type="submit" class="btn btn-primary">{{ item['contact_name'] }}</button>
+        </form>
+        <form action="/verwijder" method="post" style="display:inline-block;">
+          <input type="hidden" name="user" value="{{ user }}">
+          <input type="hidden" name="name" value="{{ item['contact_name'] }}">
+          <input type="hidden" name="id" value="{{ item['contact_ID'] }}">
+          <button type="submit" class="btn btn-danger">Verwijder contact</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>Beschikbare gebruikers</h2>
+  <ul id="everyoneList">
+    {% for item in iedereen %}
+      <li class="toevoegenn contact-item">
+        {{ item['name'] }}
+        <form action="/toevoegen" method="post" style="display:inline-block; margin-left:12px;">
+          <input type="hidden" name="user" value="{{ user }}">
+          <input type="hidden" name="name" value="{{ item['name'] }}">
+          <input type="hidden" name="id" value="{{ item['id'] }}">
+          <button type="submit" class="btn btn-outline">Toevoegen</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div style="margin-top:20px;">
+    <form action="/joeri" method="post" style="display:inline-block; margin-right:8px;">
+      <input type="hidden" name="username" value="{{ user }}">
+      <input type="hidden" name="userID" value="{{ userD }}">
+      <button type="submit" class="btn btn-primary">JoeriChatbot</button>
+    </form>
+    <form action="/logout" style="display:inline-block;">
+      <button type="submit" class="btn btn-danger">Uitloggen</button>
+    </form>
+  </div>
+
+  <script>
+    // Filter contacts based on search input
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+      const filter = this.value.toLowerCase();
+      document.querySelectorAll('.contact-item').forEach(function(item) {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(filter) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+{% endblock %}

@@ -1,0 +1,19 @@
+{%extends "dit.html"%}
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}LoginPage{% endblock %}</title>
+</head>
+<body>
+<div style="text-align: center; ">
+        <div style="margin-top: 170px;">
+        <form action="/login2"method="Post">
+            <input type="text" name="username" placeholder="Enter your name"style="font-size: 1.5em; padding: 10px; width: 300px;" required><br>
+            <input type="password" name="password" placeholder="Geef passwoord"style="font-size: 1.5em; padding: 10px; width: 300px;"><br>
+        <button style="font-size: 1.5em; padding: 10px 20px;">Klik om in te loggen</button>
+            </form>
+         </div>
+</div>
+</body>
+{% endblock %}
