@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}LoginPage{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<style>
+
+    .block {
+        height: 200px;
+        width: 300px;
+        margin: 50px;
+        opacity: 0;
+        transform: scale(0.5);
+        animation: appear linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+    }
+
+    @keyframes appear {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .view {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    @keyframes reveal {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    .img {
+        animation: reveal linear;
+        animation-timeline: view();
+    }
+    @keyframes appear {
+        from { opacity: 0; transform: scale(0.5); }
+        to   { opacity: 1; transform: scale(1); }
+    }
+    .block {
+
+        animation: auto linear appear both;
+        animation-timeline: view(block);
+        animation-range: entry exit;
+    }
+
+
+    .block{
+        animation: apprear linear;
+        animation-timeline: view();
+        animation-range:  entry 0% cover 40%;
+    }
+</style>
+<body>
+<div style="background-color: #e1f5ff;">
+    <div class="form-content">
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <form action="/FAQ"><button>FAQ</button></form>
+            <form action="/SUPPORT"><button>SUPPORT</button></form>
+            <form action="/signup"><button>Signup</button></form>
+            <form action="/login" method="post"><button>Login</button></form>
+        </div>
+        <div class="view"></div>
+            <div style="text-align: center;">
+                <h1>THE MESSAGING APP THAT KNOWS NO BOUNDARIES</h1>
+
+                <section>
+                    <img src="{{ url_for('static', filename='gif.gif') }}" alt="foto" width="800" height="600">
+                </section>
+
+                <section class="block">
+                    <h1>UNLIMITED OPTIONS AND AI SUPPORT</h1>
+                </section>
+
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto.webp') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto.webp') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto.webp') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <img src="{{ url_for('static', filename='foto.webp') }}" alt="foto" width="1200" height="750">
+                </section>
+                <section class="block">
+                    <p>
+                        Hallo Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Placeat deleniti fugit velit quo libero, earum asperiores blanditiis rem alias eligendi
+                        porro reiciendis soluta ipsam sit. Distinctio aut recusandae maxime sit!
+                    </p>
+                </section>
+                    <section>
+                        <img src="static/gif.gif" width="800" height="600">
+                    </section>
+
+                    <section class="block">
+                        <h1>UNLIMITED OPTIONS AND AI SUPPORT</h1>
+                    </section>
+
+                    <section class="block">
+                        <img src="static/foto.webp" width="1200" height="750">
+                    </section>
+
+                    <section class="block">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa -lorme>m-lorme</quidem!m-lorme>.</p>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda explicabo expedita, sequi non perspiciatis totam necessitatibus nulla et corporis maxime labore animi voluptatum incidunt laborum, ex quaerat ipsum fugiat! Autem.
+
+                        </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa -lorme>m-lorme</quidem!m-lorme>.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa <-lorme>m-lorme</quidem!m-lorme>.</p>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda explicabo expedita, sequi non perspiciatis totam necessitatibus nulla et corporis maxime labore animi voluptatum incidunt laborum, ex quaerat ipsum fugiat! Autem.
+
+                        </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ips-lorme>m-lorme</quidem!m-lorme>.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa m-lorme</quidem!m-lorme>.</p>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda explicabo expedita, sequi non perspiciatis totam necessitatibus nulla et corporis maxime labore animi voluptatum incidunt laborum, ex quaerat ipsum fugiat! Autem.
+
+                        </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ip-lorme>m-lorme</quidem!m-lorme>.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa rme</quidem!m-lorme>.</p>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda explicabo expedita, sequi non perspiciatis totam necessitatibus nulla et corporis maxime labore animi voluptatum incidunt laborum, ex quaerat ipsum fugiat! Autem.
+
+                        </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa <-lorme>m-lorme</quidem!m-lorme>.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque minima consequuntur rem, amet inventore, eveniet eaque aliquam sequi, id repudiandae quo unde molestiae similique quas mollitia illo saepe ipsa lorme</quidem!m-lorme>.</p>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda explicabo expedita, sequi non perspiciatis totam necessitatibus nulla et corporis maxime labore animi voluptatum incidunt laborum, ex quaerat ipsum fugiat! Autem.
+
+                        </p>
+
+                    </section>
+            </div>
+                <script defer src="app.js"></script>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
