@@ -4,11 +4,6 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="alles">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
     <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
@@ -30,7 +25,6 @@
       <change afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/signuppage.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/template.html" afterDir="false" />
->>>>>>> 2962386 (alles)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,24 +136,6 @@
       <option name="presentableId" value="Default" />
       <updated>1751712813100</updated>
     </task>
-<<<<<<< HEAD
-    <task id="LOCAL-00001" summary="alles">
-      <option name="closed" value="true" />
-      <created>1770203554508</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1770203554508</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="alles" />
-    <option name="LAST_COMMIT_MESSAGE" value="alles" />
-  </component>
-=======
-    <servers />
-  </component>
->>>>>>> 2962386 (alles)
 </project>
