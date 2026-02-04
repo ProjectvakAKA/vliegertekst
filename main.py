@@ -1,112 +1,185 @@
-from flask import Flask,render_template,request,session,redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 from db_wrapper import db
-from werkzeug.security import generate_password_hash,check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'kqlsfhdsjkhfdsqflhdsqfhdskfhflhqlfkq'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat.db'
-
-
 
 
 @app.route('/')
 def home():
     return render_template('main.html')
 
-@app.route('/singuppage',methods=['POST'])
-def signuppage():
-    username = request.form['username']
-    password= request.form["password"]
-    hashed_password = generate_password_hash(password)
-    if db.execute("select name from users where name=%s", username):
-        return 'naam als in dingen'
-    if password:
-        db.execute("insert into users (name,password) VALUES(%s,%s)", username, hashed_password)
-        session['name'] = username
-        userrr = db.execute("SELECT id, name FROM users where name=%s", username)
-        user = userrr[0]['id']
-        iedereen = db.execute(
-            "SELECT id, name FROM users "
-            "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
-            "AND id != %s",
-            user, user
-        )
-        dat = db.execute("select * from contacts where user_id=%s", user)
-        return render_template('template.html', user=username, userD=user, dat=dat, iedereen=iedereen)
-
-    else:
-        return "Fout, paswoord niet opgegeven"
 
 @app.route("/signup")
 def signup():
     return render_template('signuppage.html')
 
-@app.route("/login",methods=['POST'])
-def login():
-    return render_template("loginpage.html")
 
-@app.route("/login2", methods=['POST'])
-def login2():
-    username = request.form['username']
-    password = request.form.get('password')
-    if not db.execute("select password from users where name=%s", username):
-        return 'foutje'
-    stored_hash_row = db.execute("select password from users where name=%s", username)
-    if stored_hash_row is None:
-        return 'user niet gevonden'
-    stored_hash = stored_hash_row[0]["password"]
-    if check_password_hash(stored_hash, password):
+@app.route('/singuppage', methods=['POST'])
+def signuppage():
+    try:
+        # Haal data op
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '').strip()
+
+        # Validatie
+        if not username:
+            return "❌ Error: Vul een gebruikersnaam in!", 400
+
+        if not password:
+            return "❌ Error: Vul een wachtwoord in!", 400
+
+        if len(username) < 3:
+            return "❌ Error: Gebruikersnaam moet minimaal 3 karakters zijn!", 400
+
+        if len(password) < 6:
+            return "❌ Error: Wachtwoord moet minimaal 6 karakters zijn!", 400
+
+        # Check of gebruiker al bestaat
+        print(f"🔍 Checking if user '{username}' already exists...")
+        existing = db.execute("SELECT id FROM users WHERE name=%s", username)
+
+        if existing and len(existing) > 0:
+            return f"❌ Error: Gebruikersnaam '{username}' bestaat al! Kies een andere naam.", 400
+
+        # Hash wachtwoord
+        hashed_password = generate_password_hash(password)
+        print(f"✅ Creating new user: {username}")
+
+        # Maak gebruiker aan
+        db.execute("INSERT INTO users (name, password) VALUES(%s, %s)", username, hashed_password)
+
+        # Haal de nieuwe gebruiker op
+        user_result = db.execute("SELECT id, name FROM users WHERE name=%s", username)
+        if not user_result:
+            return "❌ Error: Gebruiker aanmaken mislukt!", 500
+
+        user_id = user_result[0]['id']
+        print(f"✅ User created with ID: {user_id}")
+
+        # Log gebruiker in
         session['name'] = username
-        userrr = db.execute("SELECT id, name FROM users where name=%s",username)
-        user=userrr[0]['id']
+        session['user_id'] = user_id
+
+        # Haal contacten en beschikbare gebruikers op
+        dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user_id)
         iedereen = db.execute(
             "SELECT id, name FROM users "
             "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
             "AND id != %s",
-            user, user
+            user_id, user_id
         )
-        dat = db.execute("select * from contacts where user_id=%s",user)
-        return render_template('template.html',user=username,userD=user, dat=dat, iedereen=iedereen)
 
-    else:
-        return 'fout'
+        print(f"✅ Login successful for {username}")
+        return render_template('template.html', user=username, userD=user_id, dat=dat, iedereen=iedereen)
+
+    except Exception as e:
+        print(f"❌ SIGNUP ERROR: {str(e)}")
+        return f"❌ Error bij aanmelden: {str(e)}", 500
+
+
+@app.route("/login", methods=['POST'])
+def login():
+    return render_template("loginpage.html")
+
+
+@app.route("/login2", methods=['POST'])
+def login2():
+    try:
+        # Haal data op
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '').strip()
+
+        # Validatie
+        if not username:
+            return "❌ Error: Vul een gebruikersnaam in!", 400
+
+        if not password:
+            return "❌ Error: Vul een wachtwoord in!", 400
+
+        print(f"🔍 Login attempt for user: {username}")
+
+        # Haal gebruiker op
+        user_result = db.execute("SELECT id, name, password FROM users WHERE name=%s", username)
+
+        if not user_result or len(user_result) == 0:
+            print(f"❌ User '{username}' not found")
+            return f"❌ Error: Gebruiker '{username}' bestaat niet! Maak eerst een account aan.", 400
+
+        user_data = user_result[0]
+        stored_hash = user_data['password']
+        user_id = user_data['id']
+
+        # Check wachtwoord
+        if not check_password_hash(stored_hash, password):
+            print(f"❌ Wrong password for user: {username}")
+            return "❌ Error: Verkeerd wachtwoord!", 400
+
+        print(f"✅ Password correct for user: {username}")
+
+        # Log gebruiker in
+        session['name'] = username
+        session['user_id'] = user_id
+
+        # Haal contacten en beschikbare gebruikers op
+        dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user_id)
+        iedereen = db.execute(
+            "SELECT id, name FROM users "
+            "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
+            "AND id != %s",
+            user_id, user_id
+        )
+
+        print(f"✅ Login successful for {username}")
+        return render_template('template.html', user=username, userD=user_id, dat=dat, iedereen=iedereen)
+
+    except Exception as e:
+        print(f"❌ LOGIN ERROR: {str(e)}")
+        return f"❌ Error bij inloggen: {str(e)}", 500
+
 
 @app.route("/FAQ")
 def FAQ():
     return render_template("FAQ.html")
 
+
 @app.route("/SUPPORT")
 def SUPPORT():
     return render_template("SUPPORT.html")
+
 
 @app.route("/logout")
 def logout():
     session.clear()
     return render_template('main.html')
 
+
 @app.route("/database")
 def database():
-    user= db.execute("SELECT id, name FROM users")
-    iedereen=db.execute("select * from users")
-    dat=db.execute("select * from contacts")
-    return render_template("database.html",user=user,dat=dat,iedereen=iedereen)
+    user = db.execute("SELECT id, name FROM users")
+    iedereen = db.execute("SELECT * FROM users")
+    dat = db.execute("SELECT * FROM contacts")
+    return render_template("database.html", user=user, dat=dat, iedereen=iedereen)
 
-@app.route("/toevoegen",methods=['POST'])
+
+@app.route("/toevoegen", methods=['POST'])
 def toev():
-    username= request.form["user"]
+    username = request.form["user"]
     id = request.form["id"]
     name = request.form["name"]
-    userrr = db.execute("SELECT id, name FROM users where name=%s", username)
+    userrr = db.execute("SELECT id, name FROM users WHERE name=%s", username)
     user = userrr[0]['id']
-    if id in [i['contact_ID'] for i in db.execute("select contact_ID from contacts where user_id=%s", user)] or user==id:
-        return  "fout"
-    db.execute("insert into contacts (user_id,contact_ID,contact_name,contact_phone) VALUES(%s,%s,%s,%s)", user,
+    if id in [i['contact_ID'] for i in
+              db.execute("SELECT contact_ID FROM contacts WHERE user_id=%s", user)] or user == id:
+        return "fout"
+    db.execute("INSERT INTO contacts (user_id, contact_ID, contact_name, contact_phone) VALUES(%s, %s, %s, %s)", user,
                id, name, None)
-    db.execute("insert into contacts (user_id,contact_ID,contact_name,contact_phone) VALUES(%s,%s,%s,%s)", id,
+    db.execute("INSERT INTO contacts (user_id, contact_ID, contact_name, contact_phone) VALUES(%s, %s, %s, %s)", id,
                user, username, None)
-    dat = db.execute("select * from contacts where user_id=%s", user)
+    dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user)
     iedereen = db.execute(
         "SELECT id, name FROM users "
         "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
@@ -115,13 +188,13 @@ def toev():
     )
     return render_template('template.html', user=username, userD=user, dat=dat, iedereen=iedereen)
 
-@app.route("/bericht",methods=['POST'])
+
+@app.route("/bericht", methods=['POST'])
 def bericht():
     sender_id = request.form["userID"]
     receiver_id = request.form["receiver_id"]
     username = request.form["name"]
-    userrr = db.execute("SELECT id, name FROM users where name=%s", username)
-    name = db.execute("SELECT name FROM users where id=%s", sender_id)[0]["name"]
+    name = db.execute("SELECT name FROM users WHERE id=%s", sender_id)[0]["name"]
     chats = db.execute("""
     SELECT
         m.sender_id,
@@ -140,23 +213,23 @@ def bericht():
     return render_template("berichtUI.html", user=name, userD=sender_id, andere=receiver_id, anderen=username,
                            chats=chats)
 
-@app.route("/verwijder",methods=['POST'])
+
+@app.route("/verwijder", methods=['POST'])
 def verwijder():
-    username= request.form["user"]
+    username = request.form["user"]
     id = request.form["id"]
     name = request.form["name"]
-    userrr = db.execute("SELECT id, name FROM users where name=%s", username)
+    userrr = db.execute("SELECT id, name FROM users WHERE name=%s", username)
     user = userrr[0]['id']
-    db.execute("DELETE FROM contacts WHERE (user_id = %s AND contact_ID = %s) OR (user_id = %s AND contact_ID = %s)", user,
-               id, id, user)
+    db.execute("DELETE FROM contacts WHERE (user_id = %s AND contact_ID = %s) OR (user_id = %s AND contact_ID = %s)",
+               user, id, id, user)
     db.execute('''
-    DELETE
-    FROM messages
+    DELETE FROM messages
     WHERE (sender_id = %s AND receiver_id = %s)
        OR (sender_id = %s AND receiver_id = %s)
-    ''', user,id,id,user)
+    ''', user, id, id, user)
 
-    dat = db.execute("select * from contacts where user_id=%s", user)
+    dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user)
     iedereen = db.execute(
         "SELECT id, name FROM users "
         "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
@@ -165,12 +238,13 @@ def verwijder():
     )
     return render_template('template.html', user=username, userD=user, dat=dat, iedereen=iedereen)
 
-@app.route("/back",methods=['POST'])
+
+@app.route("/back", methods=['POST'])
 def back():
     username = request.form["user"]
-    userrr = db.execute("SELECT id FROM users where name=%s", username)
+    userrr = db.execute("SELECT id FROM users WHERE name=%s", username)
     user = userrr[0]['id']
-    dat = db.execute("select * from contacts where user_id=%s", user)
+    dat = db.execute("SELECT * FROM contacts WHERE user_id=%s", user)
     iedereen = db.execute(
         "SELECT id, name FROM users "
         "WHERE id NOT IN (SELECT contact_ID FROM contacts WHERE user_id = %s) "
@@ -179,31 +253,31 @@ def back():
     )
     return render_template('template.html', user=username, userD=user, dat=dat, iedereen=iedereen)
 
-@app.route("/joeri",methods=['POST'])
+
+@app.route("/joeri", methods=['POST'])
 def joeri():
     sender_id = request.form["userID"]
-    name = db.execute("SELECT name FROM users where id=%s", sender_id)[0]["name"]
+    name = db.execute("SELECT name FROM users WHERE id=%s", sender_id)[0]["name"]
     return render_template("joeriAI.html", name=name, userD=sender_id)
 
-@app.route("/send",methods=['POST'])
+
+@app.route("/send", methods=['POST'])
 def send():
     sender_id = request.form["userID"]
     receiver_id = request.form["id"]
     message_text = request.form["message"]
     timestamp = datetime.datetime.now().isoformat()
 
-    # Bewaar in DB
     db.execute('''
         INSERT INTO messages (sender_id, receiver_id, message_text, timestamp)
         VALUES (%s, %s, %s, %s)
     ''', sender_id, receiver_id, message_text, timestamp)
 
-    # Redirect naar chatpagina (GET)
     return redirect(url_for('chat', sender_id=sender_id, receiver_id=receiver_id))
+
 
 @app.route("/chat/<int:sender_id>/<int:receiver_id>")
 def chat(sender_id, receiver_id):
-    # haal users op
     name = db.execute("SELECT name FROM users WHERE id=%s", sender_id)[0]["name"]
     anderen = db.execute("SELECT name FROM users WHERE id=%s", receiver_id)[0]["name"]
 
@@ -229,4 +303,3 @@ def chat(sender_id, receiver_id):
                            andere=receiver_id,
                            anderen=anderen,
                            chats=chats)
-#iets111
