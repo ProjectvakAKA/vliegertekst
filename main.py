@@ -207,11 +207,15 @@ def toev():
 def bericht():
     try:
         sender_id = request.form.get("userID", "").strip()
-        receiver_id = request.form.get("receiver_id", "").strip()
+        # ⭐ Probeer beide veldnamen
+        receiver_id = request.form.get("receiver_id", "").strip() or request.form.get("id", "").strip()
         username = request.form.get("name", "").strip()
 
         # Validatie
         if not sender_id or not receiver_id:
+            # ⭐ Voeg debug info toe
+            print(f"❌ Missing IDs - sender_id: '{sender_id}', receiver_id: '{receiver_id}'")
+            print(f"Form data: {request.form}")
             return "❌ Error: Gebruiker IDs ontbreken!", 400
 
         # Convert naar integers
