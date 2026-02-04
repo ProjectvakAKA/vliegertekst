@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="nieuwe update" />
+    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="nnogogggggg" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +164,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770208928650</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="nieuwe update">
+      <option name="closed" value="true" />
+      <created>1770209141786</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1770209141786</updated>
+    </task>
+    <task id="LOCAL-00008" summary="nnogogggggg">
+      <option name="closed" value="true" />
+      <created>1770209247113</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1770209247113</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -172,6 +188,7 @@
     <MESSAGE value="update" />
     <MESSAGE value="alles" />
     <MESSAGE value="nieuwe update" />
-    <option name="LAST_COMMIT_MESSAGE" value="nieuwe update" />
+    <MESSAGE value="nnogogggggg" />
+    <option name="LAST_COMMIT_MESSAGE" value="nnogogggggg" />
   </component>
 </project>
