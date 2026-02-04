@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="nieuwe update">
+    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="update van de database">
       <change afterPath="$PROJECT_DIR$/10.db" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/11.db" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/9.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database1.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/Spaces - W3schools.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/foto.webp" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/foto1.png" afterDir="false" />
@@ -745,8 +744,7 @@
       <change afterPath="$PROJECT_DIR$/venv/lib/python3.12/site-packages/werkzeug/wrappers/response.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/venv/lib/python3.12/site-packages/werkzeug/wsgi.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/venv/pyvenv.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vercel.json" beforeDir="false" afterPath="$PROJECT_DIR$/vercel.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -874,12 +872,21 @@
       <option name="project" value="LOCAL" />
       <updated>1770204025681</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update van de database">
+      <option name="closed" value="true" />
+      <created>1770205748256</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1770205748256</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="alles" />
     <MESSAGE value="nieuwe update" />
-    <option name="LAST_COMMIT_MESSAGE" value="nieuwe update" />
+    <MESSAGE value="update van de database" />
+    <option name="LAST_COMMIT_MESSAGE" value="update van de database" />
   </component>
 </project>
