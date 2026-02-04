@@ -4,9 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="alles">
       <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+    <list default="true" id="51b68a57-7899-4b10-98fb-f6a911471095" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/messsenger app .iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nog te doen" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/FAQ.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/JoeriAI.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/SUPPORT.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/berichtUI.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/database.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/loginpage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/signuppage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/template.html" afterDir="false" />
+>>>>>>> 2962386 (alles)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +142,7 @@
       <option name="presentableId" value="Default" />
       <updated>1751712813100</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00001" summary="alles">
       <option name="closed" value="true" />
       <created>1770203554508</created>
@@ -133,4 +158,8 @@
     <MESSAGE value="alles" />
     <option name="LAST_COMMIT_MESSAGE" value="alles" />
   </component>
+=======
+    <servers />
+  </component>
+>>>>>>> 2962386 (alles)
 </project>
