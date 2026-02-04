@@ -229,4 +229,4 @@ def chat(sender_id, receiver_id):
                            andere=receiver_id,
                            anderen=anderen,
                            chats=chats)
-#iets
+#iets1
