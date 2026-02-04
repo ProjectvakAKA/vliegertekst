@@ -36,13 +36,13 @@
         <form action="/bericht" method="post" style="display:inline-block; margin-right:8px;">
           <input type="hidden" name="userID" value="{{ userD }}">
           <input type="hidden" name="name" value="{{ item['contact_name'] }}">
-          <input type="hidden" name="receiver_id" value="{{ item['contact_ID'] }}">
+          <input type="hidden" name="receiver_id" value="{{ item['contact_id'] }}">  <!-- ⭐ Kleine letters! -->
           <button type="submit" class="btn btn-primary">{{ item['contact_name'] }}</button>
         </form>
         <form action="/verwijder" method="post" style="display:inline-block;">
           <input type="hidden" name="user" value="{{ user }}">
           <input type="hidden" name="name" value="{{ item['contact_name'] }}">
-          <input type="hidden" name="id" value="{{ item['contact_ID'] }}">
+          <input type="hidden" name="id" value="{{ item['contact_id'] }}">  <!-- ⭐ Kleine letters! -->
           <button type="submit" class="btn btn-danger">Verwijder contact</button>
         </form>
       </li>
