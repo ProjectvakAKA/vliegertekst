@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'kqlsfhdsjkhfdsqflhdsqfhdskfhflhqlfkq'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat.db'
-db=SQL("sqlite:///11.db")
+from database1 import db
 
 
 
@@ -219,6 +219,6 @@ def chat(sender_id, receiver_id):
                            chats=chats)
 
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# Voor Vercel deployment - verwijder of comment uit:
+# if __name__ == '__main__':
+#     app.run(debug=True)
